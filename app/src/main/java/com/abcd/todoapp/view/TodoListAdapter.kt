@@ -3,6 +3,7 @@ package com.abcd.todoapp.view
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.abcd.todoapp.R
 import com.abcd.todoapp.model.Todo
@@ -25,10 +26,18 @@ class TodoListAdapter(val todolist: ArrayList<Todo>, val adapterOnClick:(Any) ->
     }
 
     override fun onBindViewHolder(holder: TodoListViewHolder, position: Int) {
-        holder.view.checkTask.text = todolist[position].title
+        holder.view.checkTask.text = todolist[position].title + " " + todolist[position].priority
+
+        holder.view.imgEdit.setOnClickListener{
+            val action = TodoListFragmentDirections.actionEditTodoFragment(todolist[position].uuid)
+            Navigation.findNavController(it).navigate(action)
+        }
 
         holder.view.checkTask.setOnCheckedChangeListener{
-            compoundButton, b-> adapterOnClick(todolist[position])
+            compoundButton, isChecked->
+            if(isChecked){
+                adapterOnClick(todolist[position].uuid)
+            }
         }
     }
 

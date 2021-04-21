@@ -23,10 +23,14 @@ import kotlinx.android.synthetic.main.fragment_todo_list.*
  */
 class TodoListFragment : Fragment() {
     private lateinit var viewModel: ListTodoViewModel
-    private var todoListAdapter:TodoListAdapter = TodoListAdapter(arrayListOf(),{item -> doClick(item)})
+    private var todoListAdapter:TodoListAdapter = TodoListAdapter(arrayListOf()) { item -> doClick2(item) }
 
     fun doClick(item:Any){
         viewModel.clearTask(item as Todo)
+    }
+
+    fun doClick2(item:Any){
+        viewModel.updateTask(item as Int)
     }
 
     override fun onCreateView(
